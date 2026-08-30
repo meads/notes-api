@@ -111,15 +111,15 @@ export default function App() {
             <button onClick={() => setPage('list')} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', marginRight: 15 }}>Notes</button>
             <button onClick={() => { setCurrentNote(null); setTitle(''); setContent(''); setPage('create'); }} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer' }}>New Note</button>
           </div>
-          <button onClick={handleLogout} style={{ background: '#d9534f', border: 'none', color: '#fff', padding: '5px 10px', cursor: 'pointer' }}>Logout</button>
+          <button onClick={handleLogout} style={{ background: '#d9534f', border: 'none', color: '#fff', padding: '5px 10px', cursor: 'pointer', borderRadius: '4px' }}>Logout</button>
         </nav>
       )}
 
       <div style={{ padding: 20 }}>
         {page === 'login' && (
-          <div>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
+          <div className="auth-view-container">
+            <form onSubmit={handleLogin} className="auth-form">
+              <h2>Login</h2>
               <div>
                 <input type="text" placeholder="Username" 
                        value={authInput.username} 
@@ -133,19 +133,19 @@ export default function App() {
                        required />
                 </div>
               <button type="submit" style={{ marginTop: 10 }}>Login</button>
+              <p style={{ marginTop: 15 }}>Need an account? 
+                <button onClick={() => setPage('register')} 
+                        style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer', padding: 0 }}>Register
+                </button>
+              </p>
             </form>
-            <p style={{ marginTop: 15 }}>Need an account? 
-              <button onClick={() => setPage('register')} 
-                      style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer', padding: 0 }}>Register
-              </button>
-            </p>
           </div>
         )}
 
         {page === 'register' && (
-          <div>
-            <h2>Register</h2>
-            <form onSubmit={handleRegister}>
+          <div className="auth-view-container">
+            <form onSubmit={handleRegister} className="auth-form">
+              <h2>Register</h2>
               <div>
                 <input type="text" placeholder="Choose Username" 
                        value={authInput.username} 
@@ -159,12 +159,12 @@ export default function App() {
                        required />
               </div>
               <button type="submit" style={{ marginTop: 10 }}>Register & Login</button>
+              <p style={{ marginTop: 15 }}>Have an account? 
+                <button onClick={() => setPage('login')} 
+                        style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer', padding: 0 }}>Login
+                </button>
+              </p>
             </form>
-            <p style={{ marginTop: 15 }}>Have an account? 
-              <button onClick={() => setPage('login')} 
-                      style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer', padding: 0 }}>Login
-              </button>
-            </p>
           </div>
         )}
 
@@ -172,11 +172,11 @@ export default function App() {
           <div>
             <h2>Your Notes</h2>
             {!notes || notes.length === 0 ? <p>No notes found.</p> : notes.map(note => (
-              <div key={note.id} style={{ border: '1px solid #ccc', padding: 10, marginBottom: 10, borderRadius: 4 }}>
+              <div key={note.id} style={{ border: '4px solid rgb(51, 51, 51)', padding: 10, marginBottom: 10, borderRadius: 4,background: 'rgb(51, 51, 51)' }}>
                 <h3>{note.title}</h3>
                 <p>{note.content}</p>
                 <button onClick={() => handleEdit(note)} style={{ marginRight: 10 }}>Edit</button>
-                <button onClick={() => handleDelete(note.id)} style={{ background: '#d9534f', color: '#fff', border: 'none', padding: '4px 8px' }}>Delete</button>
+                <button onClick={() => handleDelete(note.id)} style={{ background: '#d9534f', color: '#fff', border: 'none', padding: '3px 8px', borderRadius: '4px' }}>Delete</button>
               </div>
             ))}
           </div>
