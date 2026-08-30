@@ -1,0 +1,5 @@
+.env
+.docker_build/
+www/node_modules/
+.vscode
+cover.out

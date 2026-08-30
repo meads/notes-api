@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    restart: always
+    env_file:
+      - .env
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - SECRET=${SECRET}
+      - ALLOW_ORIGINS=${ALLOW_ORIGINS}
+    depends_on:
+      - db
+    restart: always
+    env_file:
+      - .env
+  web:
+    build: ./web
+    restart: unless-stopped
+    ports:
+      - "3000:5173"
+    volumes:
+      - ./web:/web
+      - /web/node_modules
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
